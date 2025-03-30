@@ -14,7 +14,7 @@ const userSchema=new  mongoose.Schema({
     type:{    //type Data Structure
         type:String,
         required:true,
-        default:"student"//If no value is given default Value is "student"
+        default:"Customer"//If no value is given default Value is "Customer"
     },
     firstName:{   //firstName Data Structure
         type:String,
@@ -31,9 +31,6 @@ const userSchema=new  mongoose.Schema({
     phone:{    //Phone Number Data Structure
         type:String,
         required:true
-    },
-    Team:{      //Classification by age gap
-        type:String
     },
     profilePicture:{
         type:String,
