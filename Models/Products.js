@@ -16,7 +16,7 @@ const productSchema=new mongoose.Schema({
         required:true
     },
     price:{    //product Price Data Structure
-        type:String,//Data Type
+        type:Number,//Data Type
         required:true,//All product Definetly has price
     },
     category:{      ///product category Data Structure eg:casual shirts,formal shirts,T-Shirts,Trousers,Inner waear,pants,Tops,sarees,school uniform
@@ -28,7 +28,7 @@ const productSchema=new mongoose.Schema({
         type:String,
         required:true 
     },
-    discription:{    //product discription Data Structure
+    description:{    //product description Data Structure
         type:String,//Data Type
         required:true,//All product Definetly has discription
     },
@@ -41,7 +41,7 @@ const productSchema=new mongoose.Schema({
     Image:{
         type:[String],
         required:true,
-        default:"http://.com"
+        default:"https://example.com/default.jpg"
     }
 
 })

@@ -5,11 +5,12 @@ import jwt from "jsonwebtoken";
 import dotenv from "dotenv";
 import userRouter from "./Router/UserRouter.js";
 import productRouter from "./Router/ProductRouter.js"
-
+import cors from "cors"
 
 dotenv.config();
 
 const app=express();
+app.use(cors()); //enable cors origin resource sharing
 app.use(bodyParser.json());
 
 app.use((req,res,next)=>{
