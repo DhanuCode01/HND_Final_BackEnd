@@ -53,7 +53,8 @@ export async function LoginUser(req,res){                    //To run await, the
                         phone:user.phone
                     },process.env.jwt_SECRET)
     
-                    res.json({success:"Login Successfuly",token:token
+                    res.json({success:"Login Successfuly",token:token,
+                        user:user 
                         
                     })
             }else{

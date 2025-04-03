@@ -2,8 +2,7 @@ import products from "../Models/Products.js";
 import {isToken} from "../Validation/TokenValidation.js"
 import {isItAdmin} from "../Validation/UserValidation.js"
 
-export async function  addProduct(req,res){     //add new product 
-                                                //To run await, the function is specified as async.
+export async function  addProduct(req,res){     //add new product                                             //To run await, the function is specified as async.
     isToken(req,res);//if you have a token
 
      if (!isItAdmin(req)){              //check  authorization(is check the user admin )
@@ -23,7 +22,7 @@ export async function  addProduct(req,res){     //add new product
                     Message:"product Saved Successfully"})
         
     }catch(error){                                                              //If the lines are not running, it is a connection error.
-        res.status(500).json({error:"product Saved Unsuccessfully"})
+        res.status(500).json({error:"product Saved Unsuccessfully wee"})
     }
 
 }
@@ -56,10 +55,9 @@ export async function updateProduct(req,res){   //update product
         isToken(req,res);//if you have a token
         if(isItAdmin(req)){
 
-            const key=req.params.key;    //The key of the product that needs to be changed
-
+            const key=req.params.key;    //The key of the product that needs to be changed            
             const data =req.body;       //The product that needs to be changed
-
+            
             await products.updateOne({key,key},data) ;  //The 1st key is the product key to be updated, the 2nd key is the parameter key.
                     res.json({
                         message:"product Update Successfullly"

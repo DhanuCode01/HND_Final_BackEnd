@@ -11,12 +11,16 @@ const productSchema=new mongoose.Schema({
         type:String,//Data Type
         required:true,//All product Definetly has name
     },
+    quantity:{//Quantity
+        type:String,
+        required:true
+    },
     customerType:{//Men,Women,Kids
         type:String,
         required:true
     },
     price:{    //product Price Data Structure
-        type:Number,//Data Type
+        type:String,//Data Type
         required:true,//All product Definetly has price
     },
     category:{      ///product category Data Structure eg:casual shirts,formal shirts,T-Shirts,Trousers,Inner waear,pants,Tops,sarees,school uniform
