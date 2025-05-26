@@ -30,6 +30,7 @@ const productSchema=new mongoose.Schema({
     },
     dimension:{          //product dimension Data Structure
         type:String,
+        enum: ["Free", "Small", "Medium", "Large", "XL", "XXL", "XXXL"],
         required:true 
     },
     description:{    //product description Data Structure

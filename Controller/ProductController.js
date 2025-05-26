@@ -22,7 +22,8 @@ export async function  addProduct(req,res){     //add new product               
                     Message:"product Saved Successfully"})
         
     }catch(error){                                                              //If the lines are not running, it is a connection error.
-        res.status(500).json({error:"product Saved Unsuccessfully wee"})
+        res.status(500).json({error:"product Saved Unsuccessfully"})
+        console.log(error)
     }
 
 }
@@ -112,7 +113,7 @@ export async function getOnePruduct(req,res) {             //get product used ke
                 const key=req.params.key;
                 const product=await products.findOne({key:key});
 
-                if (product==null){
+                if (product.length === 0){
                     res.status(404).json({
                         message:"product not Found"
                     })
@@ -130,3 +131,73 @@ export async function getOnePruduct(req,res) {             //get product used ke
               
     
 }
+
+export async function getProductsMen(req,res){    //viwe product          //viwe products             //To run await, the function is specified as async.
+    
+    isToken(req,res);//if you have a token
+   
+     try{
+        const key=req.params.key;
+        const product=await products.find({customerType:"Men" , category:key });
+        
+        if (product.length === 0){
+                    res.status(404).json({
+                        message:"product not Found"
+                    })
+                    return;
+        }
+
+        res.status(200).json(product)
+        return;
+       
+     }catch(error){                                                       //If the lines are not running, it is a connection error.
+        res.status(500).json({
+           error:"database connection un successfully"})
+    }
+} 
+export async function getProductsWomen(req,res){    //viwe product          //viwe products             //To run await, the function is specified as async.
+    
+    isToken(req,res);//if you have a token
+   
+     try{
+        const key=req.params.key;
+        const product=await products.find({customerType:"Women" , category:key });
+        
+        if (product.length === 0){
+                    res.status(404).json({
+                        message:"product not Found"
+                    })
+                    return;
+        }
+
+        res.status(200).json(product)
+        return;
+       
+     }catch(error){                                                       //If the lines are not running, it is a connection error.
+        res.status(500).json({
+           error:"database connection un successfully"})
+    }
+} 
+export async function getProductsKids(req,res){    //viwe product          //viwe products             //To run await, the function is specified as async.
+    
+    isToken(req,res);//if you have a token
+   
+     try{
+        const key=req.params.key;
+        const product=await products.find({customerType:"Kids" , category:key });
+        
+        if (product.length === 0){
+                    res.status(404).json({
+                        message:"product not Found"
+                    })
+                    return;
+        }
+
+        res.status(200).json(product)
+        return;
+       
+     }catch(error){                                                       //If the lines are not running, it is a connection error.
+        res.status(500).json({
+           error:"database connection un successfully"})
+    }
+} 

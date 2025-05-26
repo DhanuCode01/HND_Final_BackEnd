@@ -2,6 +2,8 @@ import users from "../Models/User.js";
 import bcrypt from "bcrypt";
 import jwt  from "jsonwebtoken"; //get http reqest (json wep token eka amunamma)
 import dotenv from "dotenv"
+import { isToken } from "../Validation/TokenValidation.js";
+import { isItAdmin } from "../Validation/UserValidation.js";
 
 dotenv.config();
 
@@ -70,5 +72,24 @@ export async function LoginUser(req,res){                    //To run await, the
 
 
     }
+}
+
+export async function findUser(req,res) {
+    isToken(req,res);//if you have a token
+    try {
+        
+        if(isItAdmin(req)){
+            res.json({success:"Admin",  
+            })
+        }else{
+            res.json({success:"Customer"  
+            })
+        }
+    }catch(error){
+            console.log(error)                                                       //If the lines are not running, it is a connection error.
+            res.status(500).json({
+               error:"database connection un successfully"})
+    }
+    
 }
 
