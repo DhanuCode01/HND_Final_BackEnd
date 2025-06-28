@@ -1,3 +1,4 @@
+import axios from "axios";
 import products from "../Models/Products.js";
 import {isToken} from "../Validation/TokenValidation.js"
 import {isItAdmin} from "../Validation/UserValidation.js"
@@ -202,6 +203,46 @@ export async function getProductsKids(req,res){    //viwe product          //viw
     }
 } 
 
+export async function getImageSearching(req,res) { //uploaded image compair with current image
+     isToken(req,res);//if you have a token
+
+     const imageURL=req.body.URL;
+     
+     
+       if (!imageURL) {     //check if you haven't url
+            return res.status(400).json({ error: "Missing image_url in request body" });
+        }
+
+
+
+        try {    
+            const response = await axios.get(imageURL, { responseType: "arraybuffer" });//{ responseType: "arraybuffer" } – මෙය axios ට කියනවා binary data (image) එක buffer format එකෙන් ලබාගන්න.        //response.data – මෙය හරියටම image එකයි (buffer format එකෙන්).
+            const base64Image = Buffer.from(response.data, "binary").toString("base64");//Buffer.from(data, "binary") – මේක binary data එක buffer එකකට convert කරනවා.             //.toString("base64") – මෙය Buffer එක Base64 string එකක් බවට පරිවර්තනය කරනවා.
+
+                    // Try to extract image extension
+                    const contentType = response.headers["content-type"]; // e.g., "image/png"
+                    const extension = contentType.split("/")[1] || "jpeg"; // fallback to jpeg
+
+                    
+
+
+           res.json({
+                        file_type: contentType,   /* response.headers["content-type"] - server එක image එක return කරන විට කියන MIME type එක, e.g., image/png, image/jpeg, image/webp වගේ. */
+                        encoding: "base64",
+                        data: base64Image,
+                        preview: `data:${contentType};base64,${base64Image}`, // just a short preview
+            });
+
+
+            } catch (error) {
+                console.error("Image download error:", error);
+                res.status(500).json({ error: "Failed to fetch or convert image" });
+            }
+
+
+    
+    
+}
 
 
 
