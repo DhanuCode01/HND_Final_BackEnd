@@ -7,6 +7,7 @@ productRouter.post("/add",addProduct);
 productRouter.get("/men/:key",getProductsMen);
 productRouter.get("/women/:key",getProductsWomen);
 productRouter.get("/kids/:key",getProductsKids);
+//productRouter.get("/image/:key",getOnePruductImage);
 productRouter.get("/",getProducts);
 productRouter.put("/:key",updateProduct);
 productRouter.delete("/:key",deleteProduct);

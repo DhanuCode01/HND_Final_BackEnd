@@ -201,3 +201,31 @@ export async function getProductsKids(req,res){    //viwe product          //viw
            error:"database connection un successfully"})
     }
 } 
+
+
+
+
+/* export async function getOnePruductImage(req,res) {             //get product used key{parameeter}
+
+    try {
+                const key=req.params.key;
+                const product=await products.findOne({key:key});
+
+                if (product.length === 0){
+                    res.status(404).json({
+                        message:"product not Found"
+                    })
+                    return;
+                }
+
+                res.json(product.Image)
+                return;
+    } catch (error) {
+        res.status(500).json({
+            message:"Field get Product"
+        })
+        return;
+    }
+              
+    
+} */
