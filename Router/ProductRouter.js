@@ -1,5 +1,5 @@
 import express from "express";
-import { addProduct, deleteProduct, getImageSearching, getOnePruduct, getProducts, getProductsKids, getProductsMen, getProductsWomen, updateProduct } from "../Controller/ProductController.js";
+import { addProduct, deleteProduct, getOnePruduct, getProducts, getProductsKids, getProductsMen, getProductsWomen, updateProduct } from "../Controller/ProductController.js";
 
 const productRouter=express.Router();
 
@@ -8,8 +8,6 @@ productRouter.get("/men/:key",getProductsMen);
 productRouter.get("/women/:key",getProductsWomen);
 productRouter.get("/kids/:key",getProductsKids);
 //productRouter.get("/image/:key",getOnePruductImage);
-productRouter.post("/",getImageSearching);
-
 productRouter.get("/",getProducts);
 productRouter.put("/:key",updateProduct);
 productRouter.delete("/:key",deleteProduct);

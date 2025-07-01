@@ -6,12 +6,13 @@ import dotenv from "dotenv";
 import userRouter from "./Router/UserRouter.js";
 import productRouter from "./Router/ProductRouter.js"
 import cors from "cors"
+import rentProductRouter from "./Router/RectProductRouter.js";
 
 dotenv.config();
 
 const app=express();
 app.use(cors()); //enable cors origin resource sharing
-app.use(bodyParser.json());
+app.use(bodyParser.json({ limit: '20mb' }));
 
 app.use((req,res,next)=>{
     
@@ -43,6 +44,7 @@ connection.once("open",()=>{
 
 app.use("/api/user",userRouter);
 app.use("/api/product",productRouter);
+app.use("/api/rent",rentProductRouter);
 
 
 
