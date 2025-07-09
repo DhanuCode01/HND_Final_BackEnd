@@ -30,7 +30,8 @@ export async function  addRentProduct(req,res){     //add new product           
 }
 
 export async function ImageToBuffer(req,res) { //uploaded image compair with current image
-     isToken(req,res);//if you have a token
+
+     //isToken(req,res);//if you have a token
 
      const imageURL=req.body.URL;
      
@@ -38,8 +39,6 @@ export async function ImageToBuffer(req,res) { //uploaded image compair with cur
        if (!imageURL) {     //check if you haven't url
             return res.status(400).json({ error: "Missing image_url in request body" });
         }
-
-
 
         try {    
             const response = await axios.get(imageURL, { responseType: "arraybuffer" });//{ responseType: "arraybuffer" } – මෙය axios ට කියනවා binary data (image) එක buffer format එකෙන් ලබාගන්න.        //response.data – මෙය හරියටම image එකයි (buffer format එකෙන්).
@@ -52,7 +51,7 @@ export async function ImageToBuffer(req,res) { //uploaded image compair with cur
                     
 
 
-           res.json({
+           res.status(200).json({
                         file_type: contentType,   /* response.headers["content-type"] - server එක image එක return කරන විට කියන MIME type එක, e.g., image/png, image/jpeg, image/webp වගේ. */
                         encoding: "base64",
                         data: base64Image,
@@ -73,7 +72,7 @@ export async function ImageToBuffer(req,res) { //uploaded image compair with cur
 
 export async function getRentProducts(req,res){    //viwe product          //viwe products             //To run await, the function is specified as async.
     
-    isToken(req,res);//if you have a token
+    /* isToken(req,res);//if you have a token
    
      try{
 
@@ -89,5 +88,171 @@ export async function getRentProducts(req,res){    //viwe product          //viw
      }catch(error){                                                       //If the lines are not running, it is a connection error.
         res.status(500).json({
            error:"database connection un successfully"})
-    }
+    } */
+
+           try {
+                const rentproduct=await rentproducts.find();
+                res.status(200).json(rentproduct);
+           } catch (error) {
+                res.status(500).json({
+                error:"database connection un successfully"})
+           }
 } 
+
+export async function getRentProductsMen(req,res){    //viwe product          //viwe products             //To run await, the function is specified as async.
+    
+    //isToken(req,res);//if you have a token
+   
+     try{
+        const key=req.params.key;
+        const rentproduct=await rentproducts.find({customerType:"Men" , category:key });
+        
+        if (rentproduct.length === 0){
+                    res.status(404).json({
+                        message:"product not Found"
+                    })
+                    return;
+        }
+
+        res.status(200).json(rentproduct)
+        return;
+       
+     }catch(error){                                                       //If the lines are not running, it is a connection error.
+        res.status(500).json({
+           error:"database connection un successfully"})
+    }
+}
+
+
+
+export async function getRentProductsWomen(req,res){    //viwe product          //viwe products             //To run await, the function is specified as async.
+    
+    //isToken(req,res);//if you have a token
+   
+     try{
+        const key=req.params.key;
+        const rentproduct=await rentproducts.find({customerType:"Women" , category:key });
+        
+        if (rentproduct.length === 0){
+                    res.status(404).json({
+                        message:"product not Found"
+                    })
+                    return;
+        }
+
+        res.status(200).json(rentproduct)
+        return;
+       
+     }catch(error){                                                       //If the lines are not running, it is a connection error.
+        res.status(500).json({
+           error:"database connection un successfully"})
+    }
+}
+
+
+export async function getRentProductsKids(req,res){    //viwe product          //viwe products             //To run await, the function is specified as async.
+    
+    //isToken(req,res);//if you have a token
+   
+     try{
+        const key=req.params.key;
+        const rentproduct=await rentproducts.find({customerType:"Kids" , category:key });
+        
+        if (rentproduct.length === 0){
+                    res.status(404).json({
+                        message:"product not Found"
+                    })
+                    return;
+        }
+
+        res.status(200).json(rentproduct)
+        return;
+       
+     }catch(error){                                                       //If the lines are not running, it is a connection error.
+        res.status(500).json({
+           error:"database connection un successfully"})
+    }
+}
+
+
+export async function getOneRentPruduct(req,res) {             //get product used key{parameeter}
+
+    try {
+                const key=req.params.key;
+                const rentProduct=await rentproducts.findOne({key:key});
+
+                if (rentProduct.length === 0){
+                    res.status(404).json({
+                        message:"product not Found"
+                    })
+                    return;
+                }
+
+                res.json(rentProduct)
+                return;
+    } catch (error) {
+        res.status(500).json({
+            message:"Field get Product"
+        })
+        return;
+    }
+              
+    
+}
+
+
+
+export async function updateRentProduct(req,res){   //update product
+    try{
+        isToken(req,res);//if you have a token
+        if(isItAdmin(req)){
+
+            const key=req.params.key;    //The key of the product that needs to be changed            
+            const data =req.body;       //The product that needs to be changed
+            
+            await rentproducts.updateOne({key,key},data) ;  //The 1st key is the product key to be updated, the 2nd key is the parameter key.
+                    res.json({
+                        message:"product Update Successfullly"
+                    })
+            return;
+
+        }else{              //check  authorization(is check the user admin )
+            res.status(403).json({
+                Message:"your are not authorized to perform this acction"   
+            })
+            return;
+        }
+
+    }catch(error){                                                       //If the lines are not running, it is a connection error.
+        res.status(500).json({
+           error:"database connection un successfully"})
+    }
+}
+
+export async function deleteRentProduct(req,res){   //Delete product
+    try{
+        isToken(req,res);//if you have a token
+        if(isItAdmin(req)){
+
+            const key=req.params.key;    //The key of the product that needs to be changed
+
+            const data =req.body;       //The product that needs to be changed
+
+            await rentproducts.deleteOne({key,key}) ;  //The 1st key is the product key to be delete, the 2nd key is the parameter key.
+                    res.json({
+                        message:"product delete Successfullly"
+                    })
+            return;
+
+        }else{              //check  authorization(is check the user admin )
+            res.status(403).json({
+                Message:"your are not authorized to perform this acction"   
+            })
+            return;
+        }
+
+    }catch(error){                                                       //If the lines are not running, it is a connection error.
+        res.status(500).json({
+           error:"database connection un successfully"})
+    }
+}

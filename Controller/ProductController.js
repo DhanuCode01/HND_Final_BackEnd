@@ -32,9 +32,9 @@ export async function  addProduct(req,res){     //add new product               
 
 export async function getProducts(req,res){    //viwe product          //viwe products             //To run await, the function is specified as async.
     
-    isToken(req,res);//if you have a token
+    //isToken(req,res);//if you have a token
    
-     try{
+/*      try{
 
         if(isItAdmin(req)){
         const product=await products.find();             //The line below in the try will not run until the user fine.  
@@ -48,7 +48,18 @@ export async function getProducts(req,res){    //viwe product          //viwe pr
      }catch(error){                                                       //If the lines are not running, it is a connection error.
         res.status(500).json({
            error:"database connection un successfully"})
-    }
+    } */
+
+
+           try {
+            const product=await products.find();
+            res.status(200).json(product);
+            
+           } catch (error) {
+                    res.status(500).json({
+                    error:"database connection un successfully"})
+                    
+           }
 } 
 
 
@@ -135,7 +146,7 @@ export async function getOnePruduct(req,res) {             //get product used ke
 
 export async function getProductsMen(req,res){    //viwe product          //viwe products             //To run await, the function is specified as async.
     
-    isToken(req,res);//if you have a token
+    //isToken(req,res);//if you have a token
    
      try{
         const key=req.params.key;
@@ -158,7 +169,7 @@ export async function getProductsMen(req,res){    //viwe product          //viwe
 } 
 export async function getProductsWomen(req,res){    //viwe product          //viwe products             //To run await, the function is specified as async.
     
-    isToken(req,res);//if you have a token
+    //isToken(req,res);//if you have a token
    
      try{
         const key=req.params.key;
@@ -181,7 +192,7 @@ export async function getProductsWomen(req,res){    //viwe product          //vi
 } 
 export async function getProductsKids(req,res){    //viwe product          //viwe products             //To run await, the function is specified as async.
     
-    isToken(req,res);//if you have a token
+    //isToken(req,res);//if you have a token
    
      try{
         const key=req.params.key;

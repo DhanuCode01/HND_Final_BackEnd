@@ -93,3 +93,25 @@ export async function findUser(req,res) {
     
 }
 
+
+export async function getAllUser(req,res) {
+    isToken(req,res);//if you have a token
+    
+    try {
+        
+        if(isItAdmin(req)){
+            const user=await users.find();             //The line below in the try will not run until the user fine.  
+            res.status(200).json(user);
+            
+        }else{
+            res.status(402).json({error:"Not Permission"  
+            })
+        }
+    }catch(error){
+            console.log(error)                                                       //If the lines are not running, it is a connection error.
+            res.status(500).json({
+               error:"database connection un successfully"})
+    }
+    
+}
+
