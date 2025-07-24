@@ -53,7 +53,7 @@ export async function LoginUser(req,res){                    //To run await, the
                         type:user.type,
                         profilePicture:user.profilePicture,
                         phone:user.phone
-                    },process.env.jwt_SECRET)
+                    },process.env.jwt_SECRET/* ,{ expiresIn: "2m" } */ )// "2m" means 2 minutes
     
                     res.json({success:"Login Successfuly",token:token,
                         user:user 
@@ -75,9 +75,16 @@ export async function LoginUser(req,res){                    //To run await, the
 }
 
 export async function findUser(req,res) {
-    isToken(req,res);//if you have a token
+    
+    if (req.user==null){           //if you have a token
+        res.status(401).json({
+            Message:"pleace login and Try again"   
+        })
+        return;
+    }
+    
     try {
-        
+
         if(isItAdmin(req)){
             res.json({success:"Admin",  
             })

@@ -7,6 +7,7 @@ import userRouter from "./Router/UserRouter.js";
 import productRouter from "./Router/ProductRouter.js"
 import cors from "cors"
 import rentProductRouter from "./Router/RectProductRouter.js";
+import OrderRouter from "./Router/OrderRouter.js";
 
 dotenv.config();
 
@@ -45,7 +46,7 @@ connection.once("open",()=>{
 app.use("/api/user",userRouter);
 app.use("/api/product",productRouter);
 app.use("/api/rent",rentProductRouter);
-
+app.use("/api/order",OrderRouter);
 
 
 
